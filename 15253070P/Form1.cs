@@ -20,31 +20,38 @@ namespace _15253070P
 
         public void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection("Data Source =.; Initial Catalog = BankaOtomasyon; Integrated Security = True");
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT password FROM KullaniciTBL where username='"+textBox1.Text+"'", conn);
-            SqlDataReader rd = cmd.ExecuteReader();
-            int girdiMi = 0;
-            while (rd.Read())
+            try
             {
-                if (rd["password"].ToString() == textBox2.Text.ToString())
+                SqlConnection conn = new SqlConnection("Data Source =.; Initial Catalog = BankaOtomasyon; Integrated Security = True");
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT password FROM KullaniciTBL where username='" + textBox1.Text + "'", conn);
+                SqlDataReader rd = cmd.ExecuteReader();
+                int girdiMi = 0;
+                while (rd.Read())
                 {
-                    Form2 form = new Form2();
-                    form.Show();
-                    this.Hide();
-                    girdiMi = 1;
+                    if (rd["password"].ToString() == textBox2.Text.ToString())
+                    {
+                        Form2 form = new Form2();
+                        form.Show();
+                        this.Hide();
+                        girdiMi = 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hatali Kullanıcı Adı/Parola");
+                    }
+
                 }
-                else
+                if (girdiMi != 1)
                 {
                     MessageBox.Show("Hatali Kullanıcı Adı/Parola");
                 }
-
+                rd.Close();
             }
-            if (girdiMi!=1)
+            catch(Exception)
             {
-                MessageBox.Show("Hatali Kullanıcı Adı/Parola");
+                MessageBox.Show("Bağlantı Kurulamadı. SQL Server'ın çalıştığına emin olunuz.");
             }
-            rd.Close();
 
         }
 

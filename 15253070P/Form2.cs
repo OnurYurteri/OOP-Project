@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Collections;
 
-namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler tablosuna yazımı tamam. Sırada para yatırma ve havale var.
+namespace _15253070P // All Done!
 {
     public partial class Form2 : Form
     {
@@ -184,7 +184,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 conn.Open();
                 SqlCommand mEkle = new SqlCommand();
                 mEkle.Connection = conn;
-                mEkle.CommandText = "insert into MusterilerTBL (ad,soyad,adres,telefon,email) values ('" + textBox4.Text + "','" + textBox7.Text + "','" + richTextBox1.Text + "','" + textBox8.Text + "','" + textBox9.Text + "')";
+                mEkle.CommandText = "insert into MusterilerTBL (ad,soyad,adres,telefon,email) values ('" + textBox4.Text.ToString() + "','" + textBox7.Text.ToString() + "','" + richTextBox1.Text.ToString() + "','" + textBox8.Text.ToString() + "','" + textBox9.Text.ToString() + "')";
                 mEkle.ExecuteNonQuery();
                 MessageBox.Show("Müşteri Başarıyla Eklendi.");
                 textBox4.Text = "";
@@ -234,7 +234,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             }
             for (int j = 0; j < hesaplarList.Count; j++)
             {
-                if (((Hesaplar)hesaplarList[j]).bakiye==0)
+                if (((Hesaplar)hesaplarList[j]).hesap==0)
                 {
                     comboBox7.Items.Add(hesaplarList[j]);
                 } 
@@ -250,7 +250,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             int netPara = 0;
             SqlCommand bankadakiPara = new SqlCommand();
             bankadakiPara.Connection = conn;
-            bankadakiPara.CommandText = "select SUM(bakiye) from HesaplarTBL";
+            bankadakiPara.CommandText = "select SUM(hesap) from HesaplarTBL";
             SqlDataReader bankadakiParaRd = bankadakiPara.ExecuteReader();
             while (bankadakiParaRd.Read())
             {
@@ -268,6 +268,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             comboBox6.Items.Clear();
             comboBox7.Items.Clear();
             comboBox8.Items.Clear();
+            comboBox4.Text = "";
             ArrayList musteriList = new ArrayList();
             ArrayList hesaplarList = new ArrayList();
             SqlConnection conn = new SqlConnection("Data Source =.; Initial Catalog = BankaOtomasyon; Integrated Security = True");
@@ -296,7 +297,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             }
             for (int j = 0; j < hesaplarList.Count; j++)
             {
-                if (((Hesaplar)hesaplarList[j]).bakiye == 0)
+                if (((Hesaplar)hesaplarList[j]).hesap == 0)
                 {
                     comboBox7.Items.Add(hesaplarList[j]);
                 }
@@ -312,7 +313,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             int netPara = 0;
             SqlCommand bankadakiPara = new SqlCommand();
             bankadakiPara.Connection = conn;
-            bankadakiPara.CommandText = "select SUM(bakiye) from HesaplarTBL";
+            bankadakiPara.CommandText = "select SUM(hesap) from HesaplarTBL";
             SqlDataReader bankadakiParaRd = bankadakiPara.ExecuteReader();
             while (bankadakiParaRd.Read())
             {
@@ -357,7 +358,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 conn.Open();
                 SqlCommand mDegistir = new SqlCommand();
                 mDegistir.Connection = conn;
-                mDegistir.CommandText = "update MusterilerTBL set ad='" + textBox13.Text + "', soyad='" + textBox12.Text + "', adres='" + richTextBox2.Text + "',telefon='" + textBox11.Text + "',email='" + textBox10.Text + "' where musteriNo=" + ((Musteriler)comboBox3.SelectedItem).id;
+                mDegistir.CommandText = "update MusterilerTBL set ad='" + textBox13.Text.ToString() + "', soyad='" + textBox12.Text.ToString() + "', adres='" + richTextBox2.Text.ToString() + "',telefon='" + textBox11.Text.ToString() + "',email='" + textBox10.Text.ToString() + "' where musteriNo=" + ((Musteriler)comboBox3.SelectedItem).id;
                 mDegistir.ExecuteNonQuery();
                 MessageBox.Show(textBox13.Text + " " + textBox12.Text + " Adlı Müşteri Düzenlendi");
                 comboBox3.Text = "";
@@ -400,6 +401,23 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 hesapAc.CommandText = "insert into HesaplarTBL (musteriNo, ekHesap, hesap, bakiye) values (" + ((Musteriler)comboBox6.SelectedItem).id + "," + numericUpDown2.Value + "," + numericUpDown1.Value + "," + balance + ")";
                 hesapAc.ExecuteNonQuery();
                 MessageBox.Show("Hesap Açma İşlemi Gerçekleştirildi");
+                if(numericUpDown1.Value>0)
+                {
+                    SqlCommand hesapNoAl = new SqlCommand();
+                    hesapNoAl.Connection = conn;
+                    hesapNoAl.CommandText = "SELECT IDENT_CURRENT('HesaplarTBL')";
+                    SqlDataReader hesapNoAlRd = hesapNoAl.ExecuteReader();
+                    int hesapNo = 0;
+                    while (hesapNoAlRd.Read())
+                    {
+                        hesapNo = Convert.ToInt32(hesapNoAlRd[""]);
+                    }
+                    hesapNoAlRd.Close();
+                    SqlCommand islemKaydet = new SqlCommand();
+                    islemKaydet.Connection = conn;
+                    islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo, islemTur, miktar, tarih) values (" + hesapNo + ",1," + (int)numericUpDown1.Value + ",GETDATE())";
+                    islemKaydet.ExecuteNonQuery();
+                }
             }
             catch(Exception)
             {
@@ -470,21 +488,21 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                         islemKaydet.ExecuteNonQuery();
                         comboBox4.Text = "";
                     }
-                    else //ekHesaptan çek
+                    else if(((Hesaplar)comboBox4.SelectedItem).bakiye >= (decimal)numericUpDown3.Value)//ekHesaptan çek
                     {
 
                         SqlCommand paraCek = new SqlCommand();
                         paraCek.Connection = conn;
                         Hesaplar secili = (Hesaplar)comboBox4.SelectedItem;
                         int seciliSon = (int)secili.bakiye - (int)numericUpDown3.Value;
-                        int _miktar = (int)((Hesaplar)comboBox4.SelectedItem).ekHesap - (int)numericUpDown3.Value;
-                        paraCek.CommandText = "UPDATE HesaplarTBL SET ekHesap=" + _miktar + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
+                        int _miktar = (int)((Hesaplar)comboBox4.SelectedItem).hesap - (int)numericUpDown3.Value;
+                        paraCek.CommandText = "UPDATE HesaplarTBL SET hesap=" + _miktar + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
                         paraCek.ExecuteNonQuery();
                         SqlCommand paraSinirUpdate = new SqlCommand();
                         paraSinirUpdate.Connection = conn;
                         paraSinirUpdate.CommandText = "INSERT INTO ParaSinirTBL (musteriNo, miktar, tarih) values (" + ((Hesaplar)comboBox4.SelectedItem).musteriNo + "," + (int)numericUpDown3.Value + ",GETDATE())";
                         paraSinirUpdate.ExecuteNonQuery();
-                        MessageBox.Show("ekHesap Update Edildi, ParaSinir'a Satır Eklendi");
+                        MessageBox.Show("Hesap Update Edildi ekHesap Sınırına girildi, ParaSinir'a Satır Eklendi");
                         Yenile();
                         SqlCommand bakiyeUpdate = new SqlCommand();
                         bakiyeUpdate.Connection = conn;
@@ -495,6 +513,10 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                         islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo, islemTur, miktar, tarih) values (" + secili.id + ",2," + (int)numericUpDown3.Value + ",GETDATE())";
                         islemKaydet.ExecuteNonQuery();
                         comboBox4.Text = "";
+                    }
+                    else if ((decimal)numericUpDown3.Value > ((Hesaplar)comboBox4.SelectedItem).bakiye)
+                    {
+                        MessageBox.Show("Kullanılabilir Bakiye Sınırını Aştınız");
                     }
                 }
                 else if (miktar != 0 && miktar + (int)numericUpDown3.Value <= 750)
@@ -525,21 +547,21 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                         islemKaydet.ExecuteNonQuery();
                         comboBox4.Text = "";
                     }
-                    else //ekHesaptan çek
+                    else if (((Hesaplar)comboBox4.SelectedItem).bakiye >= (decimal)numericUpDown3.Value)//ekHesaptan çek
                     {
                         SqlCommand paraCek = new SqlCommand();
                         paraCek.Connection = conn;
                         Hesaplar secili = (Hesaplar)comboBox4.SelectedItem;
                         int seciliSon = (int)secili.bakiye - (int)numericUpDown3.Value;
-                        int _miktar = (int)((Hesaplar)comboBox4.SelectedItem).ekHesap - (int)numericUpDown3.Value;
-                        paraCek.CommandText = "UPDATE HesaplarTBL SET ekHesap=" + _miktar + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
+                        int _miktar = (int)((Hesaplar)comboBox4.SelectedItem).hesap - (int)numericUpDown3.Value;
+                        paraCek.CommandText = "UPDATE HesaplarTBL SET hesap=" + _miktar + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
                         paraCek.ExecuteNonQuery();
                         SqlCommand paraSinirUpdate = new SqlCommand();
                         paraSinirUpdate.Connection = conn;
                         int _sinirMiktar = miktar + (int)numericUpDown3.Value;
                         paraSinirUpdate.CommandText = "UPDATE ParaSinirTBL SET miktar=" + _sinirMiktar + " WHERE musteriNo=" + ((Hesaplar)comboBox4.SelectedItem).musteriNo + " AND datediff(Day, tarih, getdate()) = 0";
                         paraSinirUpdate.ExecuteNonQuery();
-                        MessageBox.Show("ekHesap ve ParaSinir Update Edildi");
+                        MessageBox.Show("Hesap ve ParaSinir Update Edildi, ekhesap içine girildi");
                         Yenile();
                         SqlCommand bakiyeUpdate = new SqlCommand();
                         bakiyeUpdate.Connection = conn;
@@ -551,11 +573,17 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                         islemKaydet.ExecuteNonQuery();
                         comboBox4.Text = "";
                     }
+                    else if ((decimal)numericUpDown3.Value > ((Hesaplar)comboBox4.SelectedItem).bakiye)
+                    {
+                        MessageBox.Show("Kullanılabilir Bakiye Sınırını Aştınız");
+                    }
                 }
+                
                 else
                 {
                     MessageBox.Show("Günlük para çekim sınırınız 750TL'dir");
                 }
+                
             }
             catch(Exception)
             {
@@ -573,20 +601,18 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 Hesaplar secili = (Hesaplar)comboBox4.SelectedItem;
                 SqlCommand paraYatir = new SqlCommand();
                 paraYatir.Connection = conn;
-                if (checkBox4.Checked == false)
-                {
+                
                     int hesapSon = (int)((Hesaplar)comboBox4.SelectedItem).hesap + (int)numericUpDown4.Value;
                     paraYatir.CommandText = "UPDATE HesaplarTBL SET hesap=" + hesapSon + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
                     paraYatir.ExecuteNonQuery();
                     Yenile();
-                }
-                else if (checkBox4.Checked == true)
-                {
-                    int ekHesapSon = (int)((Hesaplar)comboBox4.SelectedItem).ekHesap + (int)numericUpDown4.Value;
-                    paraYatir.CommandText = "UPDATE HesaplarTBL SET ekHesap=" + ekHesapSon + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
-                    paraYatir.ExecuteNonQuery();
-                    Yenile();
-                }
+                    SqlCommand islemKaydet = new SqlCommand();
+                    islemKaydet.Connection = conn;
+                    islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo, islemTur, miktar, tarih) values (" + secili.id + ",1," + (int)numericUpDown4.Value + ",GETDATE())";
+                    islemKaydet.ExecuteNonQuery();
+                    comboBox4.Text = "";
+                    MessageBox.Show("Para Yatırma İşlemi Tamamlandı.");
+               
 
 
                 SqlCommand bakiyeUpdate = new SqlCommand();
@@ -594,12 +620,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 int bakiyeSon = (int)secili.bakiye + (int)numericUpDown4.Value;
                 bakiyeUpdate.CommandText = "UPDATE HesaplarTBL SET bakiye=" + bakiyeSon + " where hesapNo=" + secili.id;
                 bakiyeUpdate.ExecuteNonQuery();
-                SqlCommand islemKaydet = new SqlCommand();
-                islemKaydet.Connection = conn;
-                islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo, islemTur, miktar, tarih) values (" + secili.id + ",1," + (int)numericUpDown4.Value + ",GETDATE())";
-                islemKaydet.ExecuteNonQuery();
-                comboBox4.Text = "";
-                MessageBox.Show("Para Yatırma İşlemi Tamamlandı.");
+                
             }
             catch(Exception)
             {
@@ -617,52 +638,60 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
                 conn.Open();
                 Hesaplar gonderen = (Hesaplar)comboBox4.SelectedItem;
                 Hesaplar alici = (Hesaplar)comboBox5.SelectedItem;
-                int gonderenHesap = (int)gonderen.hesap - (int)numericUpDown5.Value;
-                int gonderenBakiye = (int)gonderen.bakiye - (int)numericUpDown5.Value;
-                int alanHesap = (int)alici.hesap + (int)numericUpDown5.Value;
-                int alanBakiye = (int)alici.bakiye + (int)numericUpDown5.Value;
-                SqlCommand havaleGonderen = new SqlCommand();
-                havaleGonderen.Connection = conn;
-                havaleGonderen.CommandText = "UPDATE HesaplarTBL SET hesap=" + gonderenHesap + ", bakiye=" + gonderenBakiye + " WHERE hesapNo=" + gonderen.id;
-                havaleGonderen.ExecuteNonQuery();
-                SqlCommand havaleAlici = new SqlCommand();
-                havaleAlici.Connection = conn;
-                havaleAlici.CommandText = "UPDATE HesaplarTBL SET hesap=" + alanHesap + ", bakiye=" + alanBakiye + " WHERE hesapNo=" + alici.id;
-                havaleAlici.ExecuteNonQuery();
-                SqlCommand islemKaydet = new SqlCommand();
-                islemKaydet.Connection = conn;
-                islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo,islemTur,miktar,tarih) values (" + gonderen.id + ",3," + (int)numericUpDown5.Value + ",GETDATE())";
-                islemKaydet.ExecuteNonQuery();
-                islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo,islemTur,miktar,tarih) values (" + alici.id + ",4," + (int)numericUpDown5.Value + ",GETDATE())";
-                islemKaydet.ExecuteNonQuery();
-                SqlCommand islemNoAl = new SqlCommand();
-                islemNoAl.Connection = conn;
-                islemNoAl.CommandText = "SELECT IDENT_CURRENT('IslemlerTBL')";
-                SqlDataReader islemNoAlRd = islemNoAl.ExecuteReader();
-                int islemNo = 0;
-                while (islemNoAlRd.Read())
+                if (gonderen.bakiye>= numericUpDown5.Value)
                 {
-                    islemNo = Convert.ToInt32(islemNoAlRd[""]);
-                }
-                islemNoAlRd.Close();
-                if (islemNo != 0)
-                {
-                    SqlCommand havaleKaydet = new SqlCommand();
-                    havaleKaydet.Connection = conn;
-                    int _islemNo = islemNo - 1;
-                    havaleKaydet.CommandText = "INSERT INTO HavaleTBL (islemNo, gonderenHesap, alanHesap, tarih) values (" + _islemNo + "," + gonderen.id + "," + alici.id + ",GETDATE())";
-                    havaleKaydet.ExecuteNonQuery();
-                    havaleKaydet.CommandText = "INSERT INTO HavaleTBL (islemNo, gonderenHesap, alanHesap, tarih) values (" + islemNo + "," + gonderen.id + "," + alici.id + ",GETDATE())";
-                    havaleKaydet.ExecuteNonQuery();
+                    int gonderenHesap = (int)gonderen.hesap - (int)numericUpDown5.Value;
+                    int gonderenBakiye = (int)gonderen.bakiye - (int)numericUpDown5.Value;
+                    int alanHesap = (int)alici.hesap + (int)numericUpDown5.Value;
+                    int alanBakiye = (int)alici.bakiye + (int)numericUpDown5.Value;
+                    SqlCommand havaleGonderen = new SqlCommand();
+                    havaleGonderen.Connection = conn;
+                    havaleGonderen.CommandText = "UPDATE HesaplarTBL SET hesap=" + gonderenHesap + ", bakiye=" + gonderenBakiye + " WHERE hesapNo=" + gonderen.id;
+                    havaleGonderen.ExecuteNonQuery();
+                    SqlCommand havaleAlici = new SqlCommand();
+                    havaleAlici.Connection = conn;
+                    havaleAlici.CommandText = "UPDATE HesaplarTBL SET hesap=" + alanHesap + ", bakiye=" + alanBakiye + " WHERE hesapNo=" + alici.id;
+                    havaleAlici.ExecuteNonQuery();
+                    SqlCommand islemKaydet = new SqlCommand();
+                    islemKaydet.Connection = conn;
+                    islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo,islemTur,miktar,tarih) values (" + gonderen.id + ",3," + (int)numericUpDown5.Value + ",GETDATE())";
+                    islemKaydet.ExecuteNonQuery();
+                    islemKaydet.CommandText = "INSERT INTO IslemlerTBL (hesapNo,islemTur,miktar,tarih) values (" + alici.id + ",4," + (int)numericUpDown5.Value + ",GETDATE())";
+                    islemKaydet.ExecuteNonQuery();
+                    SqlCommand islemNoAl = new SqlCommand();
+                    islemNoAl.Connection = conn;
+                    islemNoAl.CommandText = "SELECT IDENT_CURRENT('IslemlerTBL')";
+                    SqlDataReader islemNoAlRd = islemNoAl.ExecuteReader();
+                    int islemNo = 0;
+                    while (islemNoAlRd.Read())
+                    {
+                        islemNo = Convert.ToInt32(islemNoAlRd[""]);
+                    }
+                    islemNoAlRd.Close();
+                    if (islemNo != 0)
+                    {
+                        SqlCommand havaleKaydet = new SqlCommand();
+                        havaleKaydet.Connection = conn;
+                        int _islemNo = islemNo - 1;
+                        havaleKaydet.CommandText = "INSERT INTO HavaleTBL (islemNo, gonderenHesap, alanHesap, tarih) values (" + _islemNo + "," + gonderen.id + "," + alici.id + ",GETDATE())";
+                        havaleKaydet.ExecuteNonQuery();
+                        havaleKaydet.CommandText = "INSERT INTO HavaleTBL (islemNo, gonderenHesap, alanHesap, tarih) values (" + islemNo + "," + gonderen.id + "," + alici.id + ",GETDATE())";
+                        havaleKaydet.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bağlantı Hatası");
+                    }
+                    Yenile();
+                    comboBox5.Text = "";
+                    comboBox4.Text = "";
+                    MessageBox.Show("Havele İşlemi Gerçekleştirildi.");
                 }
                 else
                 {
-                    MessageBox.Show("Bağlantı Hatası");
+                    MessageBox.Show("Girilen Tutar Gönderilen Hesabın Kullanılabilir Limitini Aşıyor");
                 }
-                Yenile();
-                comboBox5.Text = "";
-                comboBox4.Text = "";
-                MessageBox.Show("Havele İşlemi Gerçekleştirildi.");
+                
 
             }
             catch (Exception)
@@ -700,6 +729,8 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             int cikanPara=0;
             int girenPara=0;
             int netPara=0;
+            int gunIci = 0;
+
             SqlCommand bankadanCikan = new SqlCommand();
             bankadanCikan.Connection = conn;
             bankadanCikan.CommandText = "select SUM(miktar) from IslemlerTBL where islemTur=2 and tarih='"+dateTimePicker4.Text+"'";
@@ -737,7 +768,7 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             bankayaGirenRd.Close();
             SqlCommand bankadakiPara = new SqlCommand();
             bankadakiPara.Connection = conn;
-            bankadakiPara.CommandText = "select SUM(bakiye) from HesaplarTBL";
+            bankadakiPara.CommandText = "select SUM(hesap) from HesaplarTBL";
             SqlDataReader bankadakiParaRd = bankadakiPara.ExecuteReader();
             while (bankadakiParaRd.Read())
             {
@@ -746,6 +777,17 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             label33.Text = cikanPara.ToString()+" TL";
             label34.Text = girenPara.ToString() + " TL";
             label35.Text = netPara.ToString() + " TL";
+            bankadakiParaRd.Close();
+            SqlCommand gunIcindekiPara = new SqlCommand();
+            gunIcindekiPara.Connection = conn;
+            gunIcindekiPara.CommandText = "select (select sum(miktar) from IslemlerTBL where (islemTur=1 or islemTur=4) and tarih between '1900-01-01' and '"+dateTimePicker4.Text+ "') - (select sum(miktar) from IslemlerTBL where (islemTur = 2 or islemTur = 3) and tarih between '1900-01-01' and '" + dateTimePicker4.Text + "')";
+            SqlDataReader gunIcindekiParaRd = gunIcindekiPara.ExecuteReader();
+            while(gunIcindekiParaRd.Read())
+            {
+                gunIci = Convert.ToInt32(gunIcindekiParaRd[""]);
+            }
+            label29.Text = gunIci.ToString()+" TL";
+            gunIcindekiParaRd.Close();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -793,6 +835,52 @@ namespace _15253070P // Para çekme, günlük para çekme limiti, ve işlemler t
             kGetirRd.Close();
         }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection("Data Source =.; Initial Catalog = BankaOtomasyon; Integrated Security = True");
+            conn.Open();
+            Hesaplar secili = ((Hesaplar)comboBox4.SelectedItem);
+            int ekHesapSon = (int)((Hesaplar)comboBox4.SelectedItem).ekHesap + (int)numericUpDown6.Value;
+            SqlCommand ekHesapUpd = new SqlCommand();
+            ekHesapUpd.CommandText = "UPDATE HesaplarTBL SET ekHesap=" + ekHesapSon + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
+            ekHesapUpd.Connection = conn;
+            ekHesapUpd.ExecuteNonQuery();
+            SqlCommand bakiyeUpdate = new SqlCommand();
+            bakiyeUpdate.Connection = conn;
+            int bakiyeSon = (int)secili.bakiye + (int)numericUpDown6.Value;
+            bakiyeUpdate.CommandText = "UPDATE HesaplarTBL SET bakiye=" + bakiyeSon + " where hesapNo=" + secili.id;
+            bakiyeUpdate.ExecuteNonQuery();
+            Yenile();
+            MessageBox.Show("Ek Hesap Sınır Arttırma İşlemi Tamamlandı.");
+        }
+
         
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = new SqlConnection("Data Source =.; Initial Catalog = BankaOtomasyon; Integrated Security = True");
+            conn.Open();
+            Hesaplar secili = ((Hesaplar)comboBox4.SelectedItem);
+            int ekHesapSon = (int)((Hesaplar)comboBox4.SelectedItem).ekHesap - (int)numericUpDown6.Value;
+            if (ekHesapSon<0)
+            {
+                MessageBox.Show("Ek Hesap Sınırı 0'ın Altına İnemez");
+            }
+            else
+            {
+                SqlCommand ekHesapUpd = new SqlCommand();
+                ekHesapUpd.CommandText = "UPDATE HesaplarTBL SET ekHesap=" + ekHesapSon + " WHERE hesapNo=" + ((Hesaplar)comboBox4.SelectedItem).id;
+                ekHesapUpd.Connection = conn;
+                ekHesapUpd.ExecuteNonQuery();
+                SqlCommand bakiyeUpdate = new SqlCommand();
+                bakiyeUpdate.Connection = conn;
+                int bakiyeSon = (int)secili.bakiye - (int)numericUpDown6.Value;
+                bakiyeUpdate.CommandText = "UPDATE HesaplarTBL SET bakiye=" + bakiyeSon + " where hesapNo=" + secili.id;
+                bakiyeUpdate.ExecuteNonQuery();
+                Yenile();
+                MessageBox.Show("Ek Hesap Sınır Arttırma İşlemi Tamamlandı.");
+            }
+            
+        }
     }
 }

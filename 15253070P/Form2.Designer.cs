@@ -94,7 +94,6 @@
             this.button10 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
             this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.button11 = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
@@ -105,6 +104,11 @@
             this.button12 = new System.Windows.Forms.Button();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.button17 = new System.Windows.Forms.Button();
+            this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+            this.button9 = new System.Windows.Forms.Button();
+            this.label38 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label19 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
@@ -114,12 +118,12 @@
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -140,6 +144,8 @@
             this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.label35 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.label34 = new System.Windows.Forms.Label();
@@ -171,12 +177,14 @@
             this.tabPage13.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            this.tabPage14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             this.groupBox7.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            this.groupBox16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            this.groupBox16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -184,6 +192,7 @@
             this.tabPage7.SuspendLayout();
             this.groupBox15.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.SuspendLayout();
@@ -786,6 +795,7 @@
             this.tabControl3.Controls.Add(this.tabPage11);
             this.tabControl3.Controls.Add(this.tabPage12);
             this.tabControl3.Controls.Add(this.tabPage13);
+            this.tabControl3.Controls.Add(this.tabPage14);
             this.tabControl3.Location = new System.Drawing.Point(3, 62);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
@@ -843,7 +853,6 @@
             // 
             // tabPage12
             // 
-            this.tabPage12.Controls.Add(this.checkBox4);
             this.tabPage12.Controls.Add(this.numericUpDown4);
             this.tabPage12.Controls.Add(this.button11);
             this.tabPage12.Controls.Add(this.label21);
@@ -854,16 +863,6 @@
             this.tabPage12.TabIndex = 1;
             this.tabPage12.Text = "Para Yatırma";
             this.tabPage12.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(368, 113);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(103, 17);
-            this.checkBox4.TabIndex = 8;
-            this.checkBox4.Text = "Ek Hesaba Yatır";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // numericUpDown4
             // 
@@ -978,6 +977,66 @@
             this.label22.TabIndex = 7;
             this.label22.Text = "Miktar:";
             // 
+            // tabPage14
+            // 
+            this.tabPage14.Controls.Add(this.button17);
+            this.tabPage14.Controls.Add(this.numericUpDown6);
+            this.tabPage14.Controls.Add(this.button9);
+            this.tabPage14.Controls.Add(this.label38);
+            this.tabPage14.Location = new System.Drawing.Point(4, 22);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(594, 204);
+            this.tabPage14.TabIndex = 3;
+            this.tabPage14.Text = "Ek Hesap Sınır Değiştirme";
+            this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(368, 100);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(77, 21);
+            this.button17.TabIndex = 12;
+            this.button17.Text = "Azalt";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // numericUpDown6
+            // 
+            this.numericUpDown6.Location = new System.Drawing.Point(189, 88);
+            this.numericUpDown6.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.numericUpDown6.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown6.Name = "numericUpDown6";
+            this.numericUpDown6.Size = new System.Drawing.Size(173, 20);
+            this.numericUpDown6.TabIndex = 10;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(368, 73);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(77, 21);
+            this.button9.TabIndex = 9;
+            this.button9.Text = "Arttır";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(144, 90);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(39, 13);
+            this.label38.TabIndex = 8;
+            this.label38.Text = "Miktar:";
+            // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.label19);
@@ -1059,8 +1118,10 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.numericUpDown2);
             this.groupBox9.Controls.Add(this.checkBox3);
             this.groupBox9.Controls.Add(this.groupBox16);
+            this.groupBox9.Controls.Add(this.label37);
             this.groupBox9.Controls.Add(this.button13);
             this.groupBox9.Controls.Add(this.comboBox6);
             this.groupBox9.Controls.Add(this.label24);
@@ -1071,33 +1132,9 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Yeni Hesap Açımı";
             // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(72, 55);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 0;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.numericUpDown2);
-            this.groupBox16.Controls.Add(this.numericUpDown1);
-            this.groupBox16.Controls.Add(this.label37);
-            this.groupBox16.Controls.Add(this.label36);
-            this.groupBox16.Enabled = false;
-            this.groupBox16.Location = new System.Drawing.Point(78, 55);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(381, 68);
-            this.groupBox16.TabIndex = 3;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "Başlangıç Bakiyesi";
-            // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(255, 33);
+            this.numericUpDown2.Location = new System.Drawing.Point(368, 86);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -1111,6 +1148,28 @@
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown2.TabIndex = 5;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(72, 55);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(15, 14);
+            this.checkBox3.TabIndex = 0;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.numericUpDown1);
+            this.groupBox16.Controls.Add(this.label36);
+            this.groupBox16.Enabled = false;
+            this.groupBox16.Location = new System.Drawing.Point(78, 55);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(210, 68);
+            this.groupBox16.TabIndex = 3;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Başlangıç Bakiyesi";
             // 
             // numericUpDown1
             // 
@@ -1129,15 +1188,6 @@
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 4;
             // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(194, 35);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(57, 13);
-            this.label37.TabIndex = 2;
-            this.label37.Text = "Ek Hesap:";
-            // 
             // label36
             // 
             this.label36.AutoSize = true;
@@ -1146,6 +1196,15 @@
             this.label36.Size = new System.Drawing.Size(41, 13);
             this.label36.TabIndex = 0;
             this.label36.Text = "Hesap:";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(307, 88);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(57, 13);
+            this.label37.TabIndex = 2;
+            this.label37.Text = "Ek Hesap:";
             // 
             // button13
             // 
@@ -1339,17 +1398,37 @@
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.groupBox17);
             this.groupBox12.Controls.Add(this.label32);
             this.groupBox12.Controls.Add(this.groupBox14);
             this.groupBox12.Controls.Add(this.button16);
             this.groupBox12.Controls.Add(this.groupBox13);
             this.groupBox12.Controls.Add(this.dateTimePicker4);
-            this.groupBox12.Location = new System.Drawing.Point(48, 117);
+            this.groupBox12.Location = new System.Drawing.Point(48, 102);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(497, 130);
+            this.groupBox12.Size = new System.Drawing.Size(497, 183);
             this.groupBox12.TabIndex = 3;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "İşlem Yapmak İstediğiniz";
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.label29);
+            this.groupBox17.Location = new System.Drawing.Point(7, 114);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(484, 59);
+            this.groupBox17.TabIndex = 6;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Seçilen Gün Sonunda Bankadaki Para Miktarı";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label29.Location = new System.Drawing.Point(180, 20);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(0, 29);
+            this.label29.TabIndex = 2;
             // 
             // label32
             // 
@@ -1363,7 +1442,7 @@
             // groupBox14
             // 
             this.groupBox14.Controls.Add(this.label34);
-            this.groupBox14.Location = new System.Drawing.Point(253, 69);
+            this.groupBox14.Location = new System.Drawing.Point(253, 56);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(238, 53);
             this.groupBox14.TabIndex = 5;
@@ -1392,7 +1471,7 @@
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.label33);
-            this.groupBox13.Location = new System.Drawing.Point(7, 69);
+            this.groupBox13.Location = new System.Drawing.Point(7, 56);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(235, 53);
             this.groupBox13.TabIndex = 4;
@@ -1471,6 +1550,9 @@
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            this.tabPage14.ResumeLayout(false);
+            this.tabPage14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.tabPage5.ResumeLayout(false);
@@ -1478,9 +1560,9 @@
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
@@ -1492,6 +1574,8 @@
             this.groupBox15.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox17.PerformLayout();
             this.groupBox14.ResumeLayout(false);
             this.groupBox14.PerformLayout();
             this.groupBox13.ResumeLayout(false);
@@ -1621,6 +1705,12 @@
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label Tarih;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TabPage tabPage14;
+        private System.Windows.Forms.NumericUpDown numericUpDown6;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Button button17;
     }
 }
